@@ -1,4 +1,6 @@
 class Farm
+    attr_reader :name, :farmers_name
+    attr_accessor :inventory, :allotments
 
     def initialize(name, farmers_name)
         @name = name
