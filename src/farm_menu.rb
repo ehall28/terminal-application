@@ -31,7 +31,13 @@ def allotment_menu(farm)
     farm.allotments.each_with_index do |allotment, index|
         if allotment[:time_until_grown].nil? # allotment is empty
             choices.push({ name: "Allotment #{index + 1} (empty)", value: index })
-        # elsif 
+        elsif allotment[:time_until_grown] <= Time.now # if crop is grown
+            choices.push({ name: "Allotment #{index + 1} (#{allotment[:produce_type]})", value: index })
+        else # if crop is not grown
+            time_diff = allotment[:time_until_grown] - Time.now
+            minutes, seconds = time_diff.divmod(60)
+            grow_text = "Time until grown (#{minutes}m:#{seconds.to_i}s)"
+            choices.push({ name: "Allotment #{index + 1} (#{allotment[:produce_type]}) #{grow_text}", value: index })
         end
     end
     choices.push({ name: "Back", value: -1 })

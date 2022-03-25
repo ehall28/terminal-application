@@ -1,5 +1,6 @@
 require 'tty-prompt'
 require 'rainbow'
+require 'date'
 require './src/farm'
 require './src/farm_menu'
 
