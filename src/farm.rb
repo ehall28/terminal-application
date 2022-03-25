@@ -6,7 +6,18 @@ class Farm
         @name = name
         @farmers_name = farmers_name
         @inventory = {
-            seed_packet: 1,
+            seeds: { 
+                tomato: {
+                    amount: 1,
+                    grow_time_sec: 300, # 5 minutes
+                },
+                corn: {
+                    amount: 0,
+                    grow_time_sec: 300,
+                },
+                # carrot: {}
+
+            },
             # fertilizer: 0,
             produce: 0
         }
@@ -18,7 +29,7 @@ class Farm
                 # watered: false
             },
             {
-                time_until_grown: Time.now + 60, # Time.now + 60 # current time + 1 minute
+                time_until_grown: Time.now + 15, # Time.now + 60 # current time + 1 minute
                 produce_type: "Carrot" # eg corn, carrot, tomato, grapes
                 # fertilized: false,
                 # watered: false

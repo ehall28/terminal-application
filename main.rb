@@ -3,11 +3,12 @@ require 'rainbow'
 require 'date'
 require './src/farm'
 require './src/farm_menu'
+require './helpers/allotment_helpers'
+require './helpers/terminal_helpers'
 
 @prompt = TTY::Prompt.new
+clear()
 
-system 'clear'
-system 'cls'
 # TODO: add ascii art
 puts 'Farmy McFarm F.A.C.E:'
 puts 'Farmers Against Crow Espionage'
@@ -33,7 +34,7 @@ when 2
     farm_name = @prompt.ask('What would you like to call your farm?', default: 'Farmy McFarm')
     puts "#{farm_name} is a fantastic name!"
     farm = Farm.new(farm_name, "Farmer #{farmers_name}")
-    farm_menu(farm)
+    FarmMenu.new(farm)
 when 3
     puts "Thank you for playing! See you soon!"
     return
