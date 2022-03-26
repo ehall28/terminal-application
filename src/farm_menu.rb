@@ -24,13 +24,12 @@ class FarmMenu
             when 1
                 allotment_menu()
             when 2
-                # opens inventory
+                inventory()
             when 3
                 # Goes to the shop
             when 4
-                # Save and quit
-            when 5
-                # return to previous menu
+                puts 'Bye! See you soon!'
+                break # Save and quit
             end
         end
     end
@@ -79,7 +78,7 @@ class FarmMenu
         when 'empty'
             plant_menu(allotment)
         when 'ready'
-            harvest_menu()
+            harvest(allotment)
         when 'not_ready'
             growing_menu()
         end
@@ -107,7 +106,6 @@ class FarmMenu
 
     end
 
-    # TODO Add logic to disable 0 seeds
     def select_seed_menu(allotment)
         choices = []
 
@@ -132,9 +130,23 @@ class FarmMenu
         end
     end
 
-    def harvest_menu
+    def harvest(allotment)
+        clear()
+        harvest_amount = rand(1..5)
+        @farm.inventory[:produce] += harvest_amount
+        puts "You harvest #{harvest_amount} x #{allotment[:produce_type]}"
+        allotment[:time_until_grown] = nil
+        allotment[:produce_type] = nil
+        @prompt.keypress('Press any key to continue...')
     end
 
-    def growing_menu
+    def inventory()
+        puts "The amount of produce you have is #{@farm.inventory[:produce]}"
+
+        @farm.inventory[:seeds].each do |key, value|
+            puts "Available seeds - #{key.capitalize}: #{value[:amount]}"
+        end
+
+        @prompt.keypress('Press any key to continue...')
     end
 end
