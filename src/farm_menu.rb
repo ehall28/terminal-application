@@ -36,30 +36,37 @@ class FarmMenu
     end
 
     def allotment_menu
-        clear()
+        loop do
+            clear()
 
-        choices = []
-        @farm.allotments.each_with_index do |allotment, index|
-            status = check_allotment_status(allotment)
+            choices = [{ name: 'Refresh', value: 1 }]
+            @farm.allotments.each_with_index do |allotment, index|
+                status = check_allotment_status(allotment)
 
-            case status
-            when 'empty'
-                choices.push({ name: "Allotment #{index + 1} - Empty", value: allotment })
-            when 'ready'
-                choices.push({ name: "Allotment #{index + 1} - #{allotment[:produce_type]} - Ready", value: allotment })
-            when 'not_ready'
-                time_diff = allotment[:time_until_grown] - Time.now
-                minutes, seconds = time_diff.divmod(60)
-                grow_text = "(#{minutes}m:#{seconds.to_i}s)"
-                choices.push({ name: "Allotment #{index + 1} - #{allotment[:produce_type]} -", value: allotment, disabled: grow_text })
+                case status
+                when 'empty'
+                    choices.push({ name: "Allotment #{index + 1} - Empty", value: allotment })
+                when 'ready'
+                    choices.push({ name: "Allotment #{index + 1} - #{allotment[:produce_type]} - Ready", value: allotment })
+                when 'not_ready'
+                    time_diff = allotment[:time_until_grown] - Time.now
+                    minutes, seconds = time_diff.divmod(60)
+                    grow_text = "(#{minutes}m:#{seconds.to_i}s)"
+                    choices.push({ name: "Allotment #{index + 1} - #{allotment[:produce_type]} -", value: allotment, disabled: grow_text })
+                end
             end
-        end
 
-        choices.push({ name: "Back", value: -1 })
-        response = @prompt.select("Allotment menu", choices)
+            choices.push({ name: "Back", value: 2 })
+            response = @prompt.select("Allotment menu", choices)
 
-        if response != -1 # user wants to go back
-            determine_menu(response)
+            case response
+            when 1 # user refreshes
+                next
+            when 2 # user wants to go back
+                break
+            else # user selects an allotment
+                determine_menu(response)
+            end
         end
     end
 
@@ -70,7 +77,7 @@ class FarmMenu
 
         case status
         when 'empty'
-            plant_menu()
+            plant_menu(allotment)
         when 'ready'
             harvest_menu()
         when 'not_ready'
@@ -78,7 +85,7 @@ class FarmMenu
         end
     end
 
-    def plant_menu()
+    def plant_menu(allotment)
         choices = [
             { name: "Plant seed", value: 1 }, # , disabled: "()"
             { name: "Water crop", value: 2, disabled: "(Coming soon!)" },
@@ -89,7 +96,7 @@ class FarmMenu
 
         case response
         when 1
-            select_seed_menu()
+            select_seed_menu(allotment)
         when 2
             # will water crop
         when 3
@@ -100,15 +107,29 @@ class FarmMenu
 
     end
 
-    def select_seed_menu
+    # TODO Add logic to disable 0 seeds
+    def select_seed_menu(allotment)
         choices = []
 
         @farm.inventory[:seeds].each do |seed_name, seed_data|
             name = seed_name.to_s.ljust(6).capitalize # .ljust(6) will add spaces to be atleast 6 characters long
             minutes, seconds = seed_data[:grow_time_sec].divmod(60)
-            choices.push({ name: "#{name} - Amount: #{seed_data[:amount]}, Grow Time: #{minutes}m:#{seconds}s", value: seed_data })
+            seed_display = { name: "#{name} - Amount: #{seed_data[:amount]}, Grow Time: #{minutes}m:#{seconds}s", value: seed_data }
+            if seed_data[:amount] < 1
+                seed_display[:disabled] = ''
+            end
+
+            choices.push(seed_display)
         end
+
+        choices.push({ name: 'Back', value: 1 })
         response = @prompt.select("What would you like to plant?", choices)
+
+        if response != 1
+            allotment[:time_until_grown] = Time.now + response[:grow_time_sec]
+            allotment[:produce_type] = response[:name]
+            response[:amount] -= 1
+        end
     end
 
     def harvest_menu
