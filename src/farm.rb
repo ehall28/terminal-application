@@ -10,18 +10,17 @@ class Farm
                 tomato: {
                     name: 'Tomato',
                     amount: 1,
-                    grow_time_sec: 10, # seconds
                 },
                 corn: {
                     name: 'Corn',
                     amount: 0,
-                    grow_time_sec: 300, # 5 minutes in seconds
                 },
                 # carrot: {}
 
             },
             # fertilizer: 0,
-            produce: 0
+            produce: 0,
+            gold: 50
         }
         @allotments = [
             {
@@ -59,7 +58,8 @@ class Farm
         @allotments = data_hash[:allotments].map do |allotment|
             {
                 produce_type: allotment[:produce_type],
-                time_until_grown: Time.parse(allotment[:time_until_grown]) # way to convert time as a string to time - saves as a string
+                # way to convert time as a string to time - saves to json as a string
+                time_until_grown: allotment[:time_until_grown].nil? ? nil : Time.parse(allotment[:time_until_grown])
             }
         end
     end

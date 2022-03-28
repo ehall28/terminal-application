@@ -15,7 +15,7 @@ class FarmMenu
             choices = [
                 { name: "View allotments", value: 1 }, # , disabled: "()"
                 { name: "View inventory", value: 2 },
-                { name: "Go to shop", value: 3, disabled: "(Coming soon!)" },
+                { name: "Go to shop", value: 3 },
                 { name: "Exit", value: 4 }
             ]
             response = @prompt.select("What would you like to do on your farm, #{@farm.farmers_name}", choices)
@@ -26,7 +26,7 @@ class FarmMenu
             when 2
                 inventory()
             when 3
-                # Goes to the shop
+                ShopMenu.new(@farm)
             when 4
                 @farm.save_data
                 puts 'Bye! See you soon!'
@@ -144,6 +144,7 @@ class FarmMenu
     end
 
     def inventory()
+        puts "Available gold: #{@farm.inventory[:coins]}g"
         puts "The amount of produce you have is #{@farm.inventory[:produce]}"
 
         @farm.inventory[:seeds].each do |key, value|

@@ -5,8 +5,10 @@ require 'time'
 require 'json'
 require './src/farm'
 require './src/farm_menu'
+require './src/shop_menu'
 require './helpers/allotment_helpers'
 require './helpers/terminal_helpers'
+require './helpers/seed_helper'
 
 @prompt = TTY::Prompt.new
 clear()
