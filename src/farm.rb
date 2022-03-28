@@ -1,20 +1,11 @@
 class Farm
-    attr_reader :name, :farmers_name
-    attr_accessor :inventory, :allotments
+    attr_accessor :name, :farmers_name, :inventory, :allotments
 
-    def initialize(name, farmers_name)
-        @name = name
-        @farmers_name = farmers_name
+    def initialize()
+        @name = ''
+        @farmers_name = ''
         @inventory = {
-            seeds: { 
-                # tomato: {
-                #     amount: 1,
-                # },
-                # corn: {
-                #     amount: 0,
-                # },
-                # carrot
-            },
+            seeds: {},
             # fertilizer: 0,
             produce: 0,
             gold: 20

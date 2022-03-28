@@ -109,8 +109,7 @@ class FarmMenu
         choices = []
 
         @farm.inventory[:seeds].each do |seed| # Seed will be an array with 2 elements, first element is the key, second is the value
-            seed_name = seed[0] # e.g. :tomato
-            seed_data = seed[1] # e.g. {:amount=>1}
+            seed_name, seed_data = seed # e.g. [:tomato { :amount=>1 }]
 
             fancy_name = seed_name.to_s.ljust(6).capitalize # .ljust(6) will add spaces to be atleast 6 characters long
 
@@ -129,8 +128,7 @@ class FarmMenu
 
         return if response == 1
 
-        seed_name = response[0] # e.g. :tomato
-        seed_data = response[1] # e.g. {:amount=>1}
+        seed_name, seed_data = response # e.g. [:tomato, { amount: 0 }]
 
         allotment[:produce_type] = seed_name.to_s.capitalize
         allotment[:time_until_grown] = Time.now + SeedHelper::SEED_DATA[seed_name][:grow_time_sec]

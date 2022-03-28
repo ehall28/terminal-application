@@ -32,17 +32,18 @@ response = @prompt.select('What would you like to do?', choices)
 
 case response
 when 1
-    farm = Farm.new('', '') # TODO: change this so it isnt empty strings
+    farm = Farm.new
     farm.load_data
     FarmMenu.new(farm)
 when 2
     # go to new menu to create new farm
-    farmers_name = @prompt.ask('What is your name?', default: 'Joe')
-    puts "Welcome to your new farm, #{farmers_name}!"
-    farm_name = @prompt.ask('What would you like to call your farm?', default: 'Farmy McFarm')
-    puts "#{farm_name} is a fantastic name!"
-    farm = Farm.new(farm_name, "Farmer #{farmers_name}")
+    farm = Farm.new
+    farm.farmers_name = @prompt.ask('What is your name?', default: 'Joe')
+    puts "Welcome to your new farm, #{farm.farmers_name}!"
+    farm.name = @prompt.ask('What would you like to call your farm?', default: 'Farmy McFarm')
+    puts "#{farm.name} is a fantastic farm name!"
     farm.save_data
+    @prompt.keypress('Press any key to begin your new adventure...')
     FarmMenu.new(farm)
 when 3
     puts "Thank you for playing! See you soon!"

@@ -14,6 +14,9 @@ class ShopMenu
                 { name: 'Buy allotments', value: 3, disabled: '(Coming Soon!)' },
                 { name: 'Back', value: 4 }
             ]
+
+            choices[1][:disabled] = '(No produce available)' unless @farm.inventory[:produce].positive?
+
             puts "Available gold: #{@farm.inventory[:gold]}g"
             response = @prompt.select("What would you like to do?", choices)
 
@@ -64,10 +67,17 @@ class ShopMenu
                 @farm.inventory[:seeds][seed_name] = { amount: 0 }
             end
             @farm.inventory[:seeds][seed_name][:amount] += 1
+            @farm.save_data
         end
     end
 
     def sell_menu
+        produce_amount = @farm.inventory[:produce]
+        gold_earnt = 10 * produce_amount
+        @farm.inventory[:gold] += gold_earnt
+        @farm.inventory[:produce] = 0
+        puts "You have sold #{produce_amount} x produce for #{gold_earnt}g"
+        @farm.save_data
+        @prompt.keypress('Press any key to continue...')
     end
-
 end
