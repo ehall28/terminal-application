@@ -7,20 +7,17 @@ class Farm
         @farmers_name = farmers_name
         @inventory = {
             seeds: { 
-                tomato: {
-                    name: 'Tomato',
-                    amount: 1,
-                },
-                corn: {
-                    name: 'Corn',
-                    amount: 0,
-                },
-                # carrot: {}
-
+                # tomato: {
+                #     amount: 1,
+                # },
+                # corn: {
+                #     amount: 0,
+                # },
+                # carrot
             },
             # fertilizer: 0,
             produce: 0,
-            gold: 50
+            gold: 20
         }
         @allotments = [
             {

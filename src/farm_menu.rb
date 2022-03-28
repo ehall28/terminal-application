@@ -1,6 +1,5 @@
 
 class FarmMenu
-
     def initialize(farm)
         @farm = farm
         @prompt = TTY::Prompt.new
@@ -104,16 +103,20 @@ class FarmMenu
         when 4
             return
         end
-
     end
 
     def select_seed_menu(allotment)
         choices = []
 
-        @farm.inventory[:seeds].each do |seed_name, seed_data|
-            name = seed_name.to_s.ljust(6).capitalize # .ljust(6) will add spaces to be atleast 6 characters long
-            minutes, seconds = seed_data[:grow_time_sec].divmod(60)
-            seed_display = { name: "#{name} - Amount: #{seed_data[:amount]}, Grow Time: #{minutes}m:#{seconds}s", value: seed_data }
+        @farm.inventory[:seeds].each do |seed| # Seed will be an array with 2 elements, first element is the key, second is the value
+            seed_name = seed[0] # e.g. :tomato
+            seed_data = seed[1] # e.g. {:amount=>1}
+
+            fancy_name = seed_name.to_s.ljust(6).capitalize # .ljust(6) will add spaces to be atleast 6 characters long
+
+            minutes, seconds = SeedHelper::SEED_DATA[seed_name][:grow_time_sec].divmod(60)
+            seed_display = { name: "#{fancy_name} - Amount: #{seed_data[:amount]} - Grow Time: #{minutes}m:#{seconds}s", value: seed }
+
             if seed_data[:amount] < 1
                 seed_display[:disabled] = ''
             end
@@ -124,12 +127,16 @@ class FarmMenu
         choices.push({ name: 'Back', value: 1 })
         response = @prompt.select("What would you like to plant?", choices)
 
-        if response != 1
-            allotment[:time_until_grown] = Time.now + response[:grow_time_sec]
-            allotment[:produce_type] = response[:name]
-            response[:amount] -= 1
-            @farm.save_data
-        end
+        return if response == 1
+
+        seed_name = response[0] # e.g. :tomato
+        seed_data = response[1] # e.g. {:amount=>1}
+
+        allotment[:produce_type] = seed_name.to_s.capitalize
+        allotment[:time_until_grown] = Time.now + SeedHelper::SEED_DATA[seed_name][:grow_time_sec]
+
+        seed_data[:amount] -= 1
+        @farm.save_data
     end
 
     def harvest(allotment)
@@ -144,7 +151,7 @@ class FarmMenu
     end
 
     def inventory()
-        puts "Available gold: #{@farm.inventory[:coins]}g"
+        puts "Available gold: #{@farm.inventory[:gold]}g"
         puts "The amount of produce you have is #{@farm.inventory[:produce]}"
 
         @farm.inventory[:seeds].each do |key, value|

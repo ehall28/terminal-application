@@ -10,6 +10,8 @@ require './helpers/allotment_helpers'
 require './helpers/terminal_helpers'
 require './helpers/seed_helper'
 
+include SeedHelper
+
 @prompt = TTY::Prompt.new
 clear()
 
