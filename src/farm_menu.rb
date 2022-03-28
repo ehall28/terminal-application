@@ -28,6 +28,7 @@ class FarmMenu
             when 3
                 # Goes to the shop
             when 4
+                @farm.save_data
                 puts 'Bye! See you soon!'
                 break # Save and quit
             end
@@ -127,6 +128,7 @@ class FarmMenu
             allotment[:time_until_grown] = Time.now + response[:grow_time_sec]
             allotment[:produce_type] = response[:name]
             response[:amount] -= 1
+            @farm.save_data
         end
     end
 
@@ -137,6 +139,7 @@ class FarmMenu
         puts "You harvest #{harvest_amount} x #{allotment[:produce_type]}"
         allotment[:time_until_grown] = nil
         allotment[:produce_type] = nil
+        @farm.save_data
         @prompt.keypress('Press any key to continue...')
     end
 
