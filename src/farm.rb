@@ -1,9 +1,11 @@
 class Farm
+    attr_writer :cheats
     attr_accessor :name, :farmers_name, :inventory, :allotments
 
     def initialize()
         @name = ''
         @farmers_name = ''
+        @cheats = false
         @inventory = {
             seeds: {},
             # fertilizer: 0,
@@ -50,5 +52,10 @@ class Farm
                 time_until_grown: allotment[:time_until_grown].nil? ? nil : Time.parse(allotment[:time_until_grown])
             }
         end
+    end
+
+    # will return true or false for cheats
+    def cheats_enabled?
+        return @cheats
     end
 end

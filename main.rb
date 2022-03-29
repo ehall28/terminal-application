@@ -1,22 +1,37 @@
 require 'tty-prompt'
-require 'rainbow'
+require 'rainbow/refinement'
 require 'date'
 require 'time'
 require 'json'
 require './src/farm'
 require './src/farm_menu'
 require './src/shop_menu'
-require './helpers/allotment_helpers'
-require './helpers/terminal_helpers'
+require './helpers/allotment_helper'
+require './helpers/terminal_helper'
 require './helpers/seed_helper'
 
 include SeedHelper
+using Rainbow
+
+# Checking ARGV (--help, -h)
+
+
+
+
+
+
+
+
+
+
+
+# Start of application
 
 @prompt = TTY::Prompt.new
 clear()
 
 # TODO: add ascii art
-puts 'Farmy McFarm F.A.C.E:'
+puts 'Farmy McFarm F.A.C.E:'.red
 puts 'Farmers Against Crow Espionage'
 puts
 
@@ -33,6 +48,7 @@ response = @prompt.select('What would you like to do?', choices)
 case response
 when 1
     farm = Farm.new
+    farm.cheats = true if ARGV.include?('--cheats') || ARGV.include?('-c') # { |arg| arg == '--cheats' || arg == '-c' }
     farm.load_data
     FarmMenu.new(farm)
 when 2

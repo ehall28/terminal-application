@@ -6,11 +6,11 @@ module SeedHelper
         },
         corn: {
             grow_time_sec: 30,
-            cost: 20
+            cost: 30
         },
         carrot: {
             grow_time_sec: 60,
-            cost: 30
+            cost: 50
         }
     }
 end

@@ -133,13 +133,16 @@ class FarmMenu
         allotment[:produce_type] = seed_name.to_s.capitalize
         allotment[:time_until_grown] = Time.now + SeedHelper::SEED_DATA[seed_name][:grow_time_sec]
 
+        # overwrites grow time to the time.now if cheats are enabled
+        allotment[:time_until_grown] = Time.now if @farm.cheats_enabled?
+
         seed_data[:amount] -= 1
         @farm.save_data
     end
 
     def harvest(allotment)
         clear()
-        harvest_amount = rand(1..5)
+        harvest_amount = produce_modifier(allotment[:produce_type])
         @farm.inventory[:produce] += harvest_amount
         puts "You harvest #{harvest_amount} x #{allotment[:produce_type]}"
         allotment[:time_until_grown] = nil
