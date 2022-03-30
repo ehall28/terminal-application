@@ -9,13 +9,13 @@ module PlantHelper
         corn: {
             grow_time_sec: 30,
             cost: 30,
-            modifier: 2,
+            modifier: 1.5,
             emoji: '🌽'
         },
         carrot: {
             grow_time_sec: 60,
             cost: 50,
-            modifier: 4,
+            modifier: 3,
             emoji: '🥕'
         }
     }

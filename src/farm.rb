@@ -18,12 +18,6 @@ class Farm
                 produce_type: nil # eg corn, carrot, tomato, grapes
                 # fertilized: false,
                 # watered: false
-            },
-            {
-                time_until_grown: nil, # Time.now + 60 # current time + 1 minute
-                produce_type: nil # eg corn, carrot, tomato, grapes
-                # fertilized: false,
-                # watered: false
             }
         ]
     end

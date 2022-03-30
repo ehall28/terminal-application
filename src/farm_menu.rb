@@ -146,7 +146,7 @@ class FarmMenu
         # To access seed data by produce_type it needs to be a symbol
         # Error arrises because saved game stores produce_type as a string - after loading produce_type is a string
         seed_name = allotment[:produce_type].to_sym
-        harvest_amount = PlantHelper.modifier(seed_name) * rand(1..5)
+        harvest_amount = (PlantHelper.modifier(seed_name) * rand(1..10)).to_i
         @farm.inventory[:produce] += harvest_amount
         puts "You harvest #{harvest_amount} x #{seed_name.to_s.capitalize} #{PlantHelper.emoji(seed_name)}"
         allotment[:time_until_grown] = nil

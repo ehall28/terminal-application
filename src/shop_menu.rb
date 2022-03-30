@@ -8,14 +8,20 @@ class ShopMenu
     def shop_menu()
         loop do
             clear()
+            allotment_amount = @farm.allotments.length
             choices = [
                 { name: 'Buy seeds', value: 1 },
                 { name: 'Sell produce', value: 2 },
-                { name: 'Buy allotments', value: 3, disabled: '(Coming Soon!)' },
+                { name: "Buy allotment ##{allotment_amount + 1} - ", value: 3 },
                 { name: 'Back', value: 4 }
             ]
 
             choices[1][:disabled] = '(No produce available)' unless @farm.inventory[:produce].positive?
+
+            # how many allotments there are * 300 gold
+            allotment_cost = allotment_amount * AllotmentHelper::ALLOTMENT_COST
+            choices[2][:name] += "#{allotment_cost}g"
+            choices[2][:disabled] = '(Not enough gold)' unless @farm.inventory[:gold] >= allotment_cost
 
             puts "Available gold: #{@farm.inventory[:gold]}g"
             response = @prompt.select("What would you like to do?", choices)
@@ -25,6 +31,8 @@ class ShopMenu
                 buy_seeds_menu()
             when 2
                 sell_menu()
+            when 3
+                buy_allotment(allotment_cost)
             when 4
                 return
             end
@@ -77,6 +85,14 @@ class ShopMenu
         @farm.inventory[:gold] += gold_earnt
         @farm.inventory[:produce] = 0
         puts "You have sold #{produce_amount} x produce for #{gold_earnt}g"
+        @farm.save_data
+        @prompt.keypress('Press any key to continue...')
+    end
+
+    def buy_allotment(allotment_cost)
+        @farm.inventory[:gold] -= allotment_cost
+        @farm.allotments.push({ time_until_grown: nil, produce_type: nil })
+        puts 'Congratulations! You have purchased an allotment! Happy planting.'
         @farm.save_data
         @prompt.keypress('Press any key to continue...')
     end
