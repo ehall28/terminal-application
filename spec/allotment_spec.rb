@@ -8,15 +8,15 @@ describe 'test_allotment_helper' do
 
     describe 'check_allotment_status' do
         it "Checks if the allotment is empty" do
-            response = check_allotment_status(allotment_1)
+            response = AllotmentHelper.check_allotment_status(allotment_1)
             expect(response).to eq('empty')
         end
         it 'Checks if the allotment is grown' do
-            response = check_allotment_status(allotment_2)
+            response = AllotmentHelper.check_allotment_status(allotment_2)
             expect(response).to eq('ready')
         end
         it 'Checks if the allotment is growing' do
-            response = check_allotment_status(allotment_3)
+            response = AllotmentHelper.check_allotment_status(allotment_3)
             expect(response).to eq('not_ready')
         end
     end

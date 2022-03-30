@@ -40,18 +40,19 @@ class FarmMenu
 
             choices = [{ name: 'Refresh', value: 1 }]
             @farm.allotments.each_with_index do |allotment, index|
-                status = check_allotment_status(allotment)
+                status = AllotmentHelper.check_allotment_status(allotment)
+                fancy_name = allotment[:produce_type].to_s.capitalize
 
                 case status
                 when 'empty'
                     choices.push({ name: "Allotment #{index + 1} - Empty", value: allotment })
                 when 'ready'
-                    choices.push({ name: "Allotment #{index + 1} - #{allotment[:produce_type]} - Ready", value: allotment })
+                    choices.push({ name: "Allotment #{index + 1} - #{fancy_name} - Ready", value: allotment })
                 when 'not_ready'
                     time_diff = allotment[:time_until_grown] - Time.now
                     minutes, seconds = time_diff.divmod(60)
                     grow_text = "(#{minutes}m:#{seconds.to_i}s)"
-                    choices.push({ name: "Allotment #{index + 1} - #{allotment[:produce_type]} -", value: allotment, disabled: grow_text })
+                    choices.push({ name: "Allotment #{index + 1} - #{fancy_name} -", value: allotment, disabled: grow_text })
                 end
             end
 
@@ -72,7 +73,7 @@ class FarmMenu
     def determine_menu(allotment)
         clear()
 
-        status = check_allotment_status(allotment)
+        status = AllotmentHelper.check_allotment_status(allotment)
 
         case status
         when 'empty'
@@ -130,7 +131,7 @@ class FarmMenu
 
         seed_name, seed_data = response # e.g. [:tomato, { amount: 0 }]
 
-        allotment[:produce_type] = seed_name.to_s.capitalize
+        allotment[:produce_type] = seed_name
         allotment[:time_until_grown] = Time.now + SeedHelper::SEED_DATA[seed_name][:grow_time_sec]
 
         # overwrites grow time to the time.now if cheats are enabled
@@ -142,9 +143,12 @@ class FarmMenu
 
     def harvest(allotment)
         clear()
-        harvest_amount = produce_modifier(allotment[:produce_type])
+        # To access seed data by produce_type it needs to be a symbol
+        # Error arrises because saved game stores produce_type as a string - after loading produce_type is a string
+        seed_name = allotment[:produce_type].to_sym
+        harvest_amount = SeedHelper::SEED_DATA[seed_name][:modifier] * rand(1..5)
         @farm.inventory[:produce] += harvest_amount
-        puts "You harvest #{harvest_amount} x #{allotment[:produce_type]}"
+        puts "You harvest #{harvest_amount} x #{allotment[:produce_type].to_s.capitalize}"
         allotment[:time_until_grown] = nil
         allotment[:produce_type] = nil
         @farm.save_data
