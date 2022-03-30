@@ -12,7 +12,7 @@ class FarmMenu
             clear()
 
             choices = [
-                { name: "View allotments", value: 1 }, # , disabled: "()"
+                { name: "View allotments", value: 1 },
                 { name: "View inventory", value: 2 },
                 { name: "Go to shop", value: 3 },
                 { name: "Exit", value: 4 }
@@ -114,7 +114,7 @@ class FarmMenu
 
             fancy_name = seed_name.to_s.ljust(6).capitalize # .ljust(6) will add spaces to be atleast 6 characters long
 
-            minutes, seconds = SeedHelper::SEED_DATA[seed_name][:grow_time_sec].divmod(60)
+            minutes, seconds = PlantHelper.grow_time(seed_name).divmod(60)
             seed_display = { name: "#{fancy_name} - Amount: #{seed_data[:amount]} - Grow Time: #{minutes}m:#{seconds}s", value: seed }
 
             if seed_data[:amount] < 1
@@ -132,7 +132,7 @@ class FarmMenu
         seed_name, seed_data = response # e.g. [:tomato, { amount: 0 }]
 
         allotment[:produce_type] = seed_name
-        allotment[:time_until_grown] = Time.now + SeedHelper::SEED_DATA[seed_name][:grow_time_sec]
+        allotment[:time_until_grown] = Time.now + PlantHelper.grow_time(seed_name)
 
         # overwrites grow time to the time.now if cheats are enabled
         allotment[:time_until_grown] = Time.now if @farm.cheats_enabled?
@@ -146,9 +146,9 @@ class FarmMenu
         # To access seed data by produce_type it needs to be a symbol
         # Error arrises because saved game stores produce_type as a string - after loading produce_type is a string
         seed_name = allotment[:produce_type].to_sym
-        harvest_amount = SeedHelper::SEED_DATA[seed_name][:modifier] * rand(1..5)
+        harvest_amount = PlantHelper.modifier(seed_name) * rand(1..5)
         @farm.inventory[:produce] += harvest_amount
-        puts "You harvest #{harvest_amount} x #{allotment[:produce_type].to_s.capitalize}"
+        puts "You harvest #{harvest_amount} x #{seed_name.to_s.capitalize} #{PlantHelper.emoji(seed_name)}"
         allotment[:time_until_grown] = nil
         allotment[:produce_type] = nil
         @farm.save_data

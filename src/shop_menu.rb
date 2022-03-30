@@ -36,9 +36,9 @@ class ShopMenu
             clear()
             choices = []
 
-            SeedHelper::SEED_DATA.each do |seed|
+            PlantHelper::PLANT_DATA.each do |seed|
                 seed_name, seed_data = seed
-                minutes, seconds = SeedHelper::SEED_DATA[seed_name][:grow_time_sec].divmod(60)
+                minutes, seconds = PlantHelper.grow_time(seed_name).divmod(60)
                 fancy_name = "#{seed_name} seeds".capitalize.ljust(12)
 
                 seed_amount = 0

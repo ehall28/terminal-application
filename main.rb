@@ -8,9 +8,9 @@ require './src/farm_menu'
 require './src/shop_menu'
 require './helpers/allotment_helper'
 require './helpers/terminal_helper'
-require './helpers/seed_helper'
+require './helpers/plant_helper'
 
-include SeedHelper
+include PlantHelper
 include AllotmentHelper
 using Rainbow
 
@@ -45,7 +45,6 @@ puts " #{'|---|---|---|---|---'.cyan}#{'|    |--|--|    |  |'.red}"
 puts " #{'|---|---|---|---|---'.cyan}#{'|    |==|==|    |  |'.red}"
 puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".green
 puts
-puts "🍅"
 
 choices = [
     { name: "Load saved game", value: 1 }, # , disabled: "(No save data found)"
