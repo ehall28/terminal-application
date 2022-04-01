@@ -19,14 +19,6 @@ using Rainbow
 if ARGV.include?('--help') || ARGV.include?('-h')
 end
 
-
-
-
-
-
-
-
-
 # Start of application
 
 @prompt = TTY::Prompt.new
@@ -34,7 +26,7 @@ clear()
 
 # Looks broken because of interpolation/colouring
 puts "#{'Welcome to...'.blue}"
-puts "                           #{'+&-'.yellow}"
+puts
 puts "  #{'Farmy McFarm'.blue} #{'F.A.C.E'.green}:   #{'_.-^-._'.red}    .--."
 puts "                       #{".-'   _   '-.".red} |__|"
 puts "   #{'F'.green}#{'armers'.blue}  #{'A'.green}#{'gainst'.blue}   #{'/     |_|     \\|  |'.red}"
