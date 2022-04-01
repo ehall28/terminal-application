@@ -7,7 +7,7 @@ class ShopMenu
 
     def shop_menu()
         loop do
-            clear()
+            TH.clear()
             allotment_amount = @farm.allotments.length
             choices = [
                 { name: 'Buy seeds', value: 1 },
@@ -41,7 +41,7 @@ class ShopMenu
 
     def buy_seeds_menu()
         loop do
-            clear()
+            TH.clear()
             choices = []
 
             PlantHelper::PLANT_DATA.each do |seed|

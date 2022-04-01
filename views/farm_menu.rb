@@ -3,13 +3,14 @@ class FarmMenu
     def initialize(farm)
         @farm = farm
         @prompt = TTY::Prompt.new
+        @crow = CrowMenu.new
 
         farm_menu()
     end
 
     def farm_menu
         loop do
-            clear()
+            TH.clear()
 
             choices = [
                 { name: "View allotments", value: 1 },
@@ -36,7 +37,7 @@ class FarmMenu
 
     def allotment_menu
         loop do
-            clear()
+            TH.clear()
 
             choices = [{ name: 'Refresh', value: 1 }]
             @farm.allotments.each_with_index do |allotment, index|
@@ -71,7 +72,7 @@ class FarmMenu
     end
 
     def determine_menu(allotment)
-        clear()
+        TH.clear()
 
         status = AllotmentHelper.check_allotment_status(allotment)
 
@@ -131,18 +132,22 @@ class FarmMenu
 
         seed_name, seed_data = response # e.g. [:tomato, { amount: 0 }]
 
-        allotment[:produce_type] = seed_name
-        allotment[:time_until_grown] = Time.now + PlantHelper.grow_time(seed_name)
+        if rand(1..5) == 1
+            @crow.crow_encounter(allotment)
+        else
+            allotment[:produce_type] = seed_name
+            allotment[:time_until_grown] = Time.now + PlantHelper.grow_time(seed_name)
 
-        # overwrites grow time to the time.now if cheats are enabled
-        allotment[:time_until_grown] = Time.now if @farm.cheats_enabled?
+            # overwrites grow time to the time.now if cheats are enabled
+            allotment[:time_until_grown] = Time.now if @farm.cheats_enabled?
+        end
 
         seed_data[:amount] -= 1
         @farm.save_data
     end
 
     def harvest(allotment)
-        clear()
+        TH.clear()
         # To access seed data by produce_type it needs to be a symbol
         # Error arrises because saved game stores produce_type as a string - after loading produce_type is a string
         seed_name = allotment[:produce_type].to_sym
