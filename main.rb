@@ -19,9 +19,17 @@ using Rainbow
 # Checking ARGV (--help, -h)
 
 if ARGV.include?('--help') || ARGV.include?('-h')
-    puts 'Welcome to Farmy McFarm F.A.C.E'.magenta
-    puts 'A simple, yet fun, farming simulator text game'.yellow
-    puts 'The idea of the game is to plant seeds, harvest them and then sell the produce'
+    TH.slow_text 'Welcome to Farmy McFarm F.A.C.E'.magenta
+    TH.slow_text 'A simple, yet fun, farming simulator text game!'.yellow
+    TH.slow_text 'The idea of the game is to plant seeds, harvest them and then sell the produce for gold.'.cyan
+    TH.slow_text 'Eventually, you work your way up to buying additional allotments, which allows you to plant'.cyan
+    TH.slow_text "more seeds, which gets you more produce AND... you see where I'm going with this...".cyan
+    TH.slow_text "But be careful, those crows look like they're up to something! Just make sure you always".red
+    TH.slow_text "have gold or seeds handy...".red
+    TH.slow_text "If you also get a bit tired on waiting for those cheeky vegetables to grow, perhaps turning on some".green
+    TH.slow_text "cheats will get that heart beating, and oh..I ah.. won't tell anyone that you cheated in a farm game..".green
+    TH.slow_text 'Just type '.yellow + './run.sh -c '.red + 'or'.yellow + ' ./run.sh --cheats'.red + ' into this here terminal to enable those chea... extra features..'.yellow
+    TH.slow_text 'Happy planting :)'.magenta
     return
 end
 
@@ -43,16 +51,16 @@ class Main
         TH.clear()
         # Looks broken because of interpolation/colouring
         begin
-            TH.slow_text 'Welcome to...'.blue
+            TH.slow_text 'Welcome to...'.cyan
             puts
-            TH.slow_text "  #{'Farmy McFarm'.blue} #{'F.A.C.E'.green}:   #{'_.-^-._'.red}    .--."
+            TH.slow_text "  #{'Farmy McFarm'.cyan} #{'F.A.C.E'.green}:   #{'_.-^-._'.red}    .--."
             TH.slow_text "                       #{".-'   _   '-.".red} |__|"
-            TH.slow_text "   #{'F'.green}#{'armers'.blue}  #{'A'.green}#{'gainst'.blue}   #{'/     |_|     \\|  |'.red}"
-            TH.slow_text "   #{'C'.green}#{'row'.blue}  #{'E'.green}#{'spionage'.blue}   #{'/               \\  |'.red}"
+            TH.slow_text "   #{'F'.green}#{'armers'.cyan}  #{'A'.green}#{'gainst'.cyan}   #{'/     |_|     \\|  |'.red}"
+            TH.slow_text "   #{'C'.green}#{'row'.cyan}  #{'E'.green}#{'spionage'.cyan}   #{'/               \\  |'.red}"
             TH.slow_text "                    #{'/|     _____     |\\ |'.red}"
             TH.slow_text "                     #{'|    |==|==|    |  |'.red}"
-            TH.slow_text " #{'|---|---|---|---|---'.cyan}#{'|    |--|--|    |  |'.red}"
-            TH.slow_text " #{'|---|---|---|---|---'.cyan}#{'|    |==|==|    |  |'.red}"
+            TH.slow_text " #{'|---|---|---|---|---'.blue}#{'|    |--|--|    |  |'.red}"
+            TH.slow_text " #{'|---|---|---|---|---'.blue}#{'|    |==|==|    |  |'.red}"
             TH.slow_text "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".green
             sleep 1.5
             puts

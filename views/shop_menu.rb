@@ -24,7 +24,7 @@ class ShopMenu
             choices[2][:disabled] = '(Not enough gold)' unless @farm.inventory[:gold] >= allotment_cost
 
             puts "Available gold: #{@farm.inventory[:gold]}g"
-            response = @prompt.select("What would you like to do?", choices)
+            response = @prompt.select("Welcome to the shop! What would you like to do?", choices)
 
             case response
             when 1
