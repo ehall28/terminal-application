@@ -97,6 +97,8 @@ class Main
                 puts "#{farm.name} is a fantastic farm name!"
                 farm.save_data
                 @prompt.keypress('Press any key to begin your new adventure...')
+                TH.clear()
+                intro()
                 FarmMenu.new(farm)
             when 3
                 puts "Thank you for playing! See you soon!"
@@ -107,6 +109,33 @@ class Main
             TH.clear()
             puts 'Thank you for playing! :)'
         end
+    end
+
+    def intro()
+        puts
+        puts
+        puts "                                  .-------------------------------."
+        puts "                                 | Hey there neighbour! I see      |"
+        puts "                  .--.--.        | that you just moved into that   |"
+        puts "                .; .;|;. ;.      | ol'farm there. Word of advice,  |"
+        puts "              .;_;'     ';_;.    | watch out for those crows.      |"
+        puts "              ; ;'       '; ;    | They're up to something,        |"
+        puts "             ;; .--.___.--. ;;   | always scheming and stealing    |"
+        puts "             ;=[  O )=( O  ]=;   | seeds. But I'm onto them! I'm   |"
+        puts "             (  `--' | `--'  )   | a farmer against crow espionage!|"
+        puts "             \\|     (      |/    | /------------------------------'                            .--------."
+        puts "               .  .:::::.  .     \\/                                                            | cawcaw |"
+        puts "                .  '---'  .                                                                    |/-------'"
+        puts "                |`.     .'|                                                                    .-.  ,-."
+        puts "       ,-------/|  `...'  |\\-------,                                                           ;oo  oo;"
+        puts "     ,'       | `.       ,' |        `,                                                       / \\|  |/ \\"
+        puts "    /         \\  /'.   ,'\\  /          \\                                                     |. `.  .' .|"
+        puts "   ;           |/   \\ /   \\|            ;                                                    `;.;'  `;.;'"
+        puts "                                                                                             .-^-.  .-^-."
+        @prompt.keypress('Press any key to continue...')
+        clear()
+        TH.slow_text "Well that was odd, surely these crows are nothing to worry about..."
+        @prompt.keypress('Press any key to head to your farm...')
     end
 end
 
