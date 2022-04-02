@@ -78,36 +78,31 @@ class Main
     end
 
     def main_menu
-        begin
-            response = @prompt.select('What would you like to do?', @choices)
+        response = @prompt.select('What would you like to do?', @choices)
 
-            case response
-            when 1
-                farm = Farm.new
-                farm.cheats = true if ARGV.include?('--cheats') || ARGV.include?('-c')
-                farm.load_data
-                FarmMenu.new(farm)
-            when 2
-                # go to new menu to create new farm
-                farm = Farm.new
-                farm.cheats = true if ARGV.include?('--cheats') || ARGV.include?('-c')
-                farm.farmers_name = @prompt.ask('What is your name?', default: 'Joe').strip
-                puts "Welcome to your new farm, #{farm.farmers_name}!"
-                farm.name = @prompt.ask('What would you like to call your farm?', default: 'Farmy McFarm').strip
-                puts "#{farm.name} is a fantastic farm name!"
-                farm.save_data
-                @prompt.keypress('Press any key to begin your new adventure...')
-                TH.clear()
-                intro()
-                FarmMenu.new(farm)
-            when 3
-                puts "Thank you for playing! See you soon!"
-                return
-                # exit the application
-            end
-        rescue Interrupt
+        case response
+        when 1
+            farm = Farm.new
+            farm.cheats = true if ARGV.include?('--cheats') || ARGV.include?('-c')
+            farm.load_data
+            FarmMenu.new(farm)
+        when 2
+            # go to new menu to create new farm
+            farm = Farm.new
+            farm.cheats = true if ARGV.include?('--cheats') || ARGV.include?('-c')
+            farm.farmers_name = @prompt.ask('What is your name?', default: 'Joe').strip
+            puts "Welcome to your new farm, #{farm.farmers_name}!"
+            farm.name = @prompt.ask('What would you like to call your farm?', default: 'Farmy McFarm').strip
+            puts "#{farm.name} is a fantastic farm name!"
+            farm.save_data
+            @prompt.keypress('Press any key to begin your new adventure...')
             TH.clear()
-            puts 'Thank you for playing! :)'
+            intro()
+            FarmMenu.new(farm)
+        when 3
+            puts "Thank you for playing! See you soon!"
+            return
+            # exit the application
         end
     end
 
@@ -140,4 +135,9 @@ class Main
 end
 
 # Entry point for application
-Main.new
+begin
+    Main.new
+rescue Interrupt
+    TH.clear()
+    puts 'Thank you for playing! :)'
+end

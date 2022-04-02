@@ -2,17 +2,18 @@
 ---
 ## About
 
+![intro screenshot](docs/farm.png)
+
 Farmy McFarm Face is a simple, yet enjoyable, terminal farming simulator game. It allows you to plant and harvest your crops, all while trying to avoid those pesky crows.
 
 ---
 ## How to play
 
-The game begins either creating a new game or by loading a previous save if one is available. Creating a new game will overwrite any previous saved data. A new game begins with you selecting your farm and farmers name
+The game begins by either creating a new game or by loading a previous save if one is available. Creating a new game will overwrite any previous saved data. A new game will begin with a small intro (if you wish, it can be skipped using `ctrl + c` in the terminal), and after you select your farm and farmers name you'll be able to begin planting!
 
 The game allows you to plant a seed of your choice (currently 3 types available) and harvest your produce after it has grown. But be warned, the crows are committed to eating all of your seeds, so make sure you have a little extra gold saved up, just in case.
 
-Once a seed has grown and it says it is ready, you can then harvest it, giving you a random amount of produce which is stored in your inventory.
-
+Once a seed has grown and it says it is ready, you can then harvest it, giving you a random amount of produce which is stored in your inventory. When you have harvested your crops, you can then head on over to the store and sell your hard earned produce. Your gold will be updated and you can now go and purchase more seeds, or if you have enough gold you can purchase additional allotments.
 
 ---
 
@@ -36,7 +37,7 @@ Once a seed has grown and it says it is ready, you can then harvest it, giving y
 ---
 ## Installation instructions
 
-and here
+Downlaod the ZIP file directly [here](https://github.com/ehall28/terminal-application/archive/refs/heads/master.zip) or click on the green code button at the top of this page, selecting download ZIP. Once downloaded you will need to extract/unzip the files and run the program through the terminal of your choice. To run the application type `./run.sh` into the terminal to begin. Running this script will ensure all the gems needed to run this program have been downloaded.    
 
 ### Command line arguments
 
@@ -50,7 +51,7 @@ e.g., `./run.sh -h`
 ---
 ## Dependencies
 
-Farmy McFarm FACE is written entirely in the programming language Ruby, which will require you to have it [installed](https://www.ruby-lang.org/en/documentation/installation/) to run the application.  
+Farmy McFarm FACE is written entirely in the programming language Ruby (3.1.1), which will require you to have it [installed](https://www.ruby-lang.org/en/documentation/installation/) to run the application.  
 
 The application also uses the following gems:
 
@@ -61,12 +62,17 @@ The application also uses the following gems:
 - [json](https://ruby-doc.org/stdlib-3.1.1/libdoc/json/rdoc/JSON.html)  
 
 These gems will be installed automatically when using `./run.sh` in the terminal to start the application. 
-  
 
 ---
 ## System/hardware requirements
 
-This application will run on most devices and operating systems, assuming that ruby is installed correctly.  
-It is not necessary, but highly recommended to use a dark terminal theme, as the colours of the text will display easier.
+This application will run on most devices and operating systems, assuming that ruby is installed correctly.    
+
+It is not necessary, but highly recommended to use a dark terminal theme, as the colours of the text will display easier. Also ensure that your terminal size is at least 20 lines long for the best experience, this can be checked easily by typing in `tput lines` into your terminal.
 
 ---
+
+Throughout the development of this application I used a Trello board to plan out each step and thought process, which can be viewed [here](https://trello.com/b/d1aHxYDY/terminal-application).
+
+![Trello screenshot](./docs/trello_screenshot.png)
+![Trello screenshot2](./docs/trello_screenshot1.png)
