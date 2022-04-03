@@ -132,6 +132,7 @@ class FarmMenu
 
         seed_name, seed_data = response # e.g. [:tomato, { amount: 0 }]
 
+        # crow encounter
         if rand(1..5) == 1
             @crow.crow_encounter(allotment)
         else

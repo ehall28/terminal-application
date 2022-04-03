@@ -18,7 +18,7 @@ module PlantHelper
             modifier: 3,
             emoji: '🥕'
         }
-    }
+    }.freeze
 
     def grow_time(plant)
         return PLANT_DATA[plant.to_sym][:grow_time_sec]
